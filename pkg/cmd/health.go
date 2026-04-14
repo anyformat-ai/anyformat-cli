@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/anyformat-ai/anyformat-go"
+	"github.com/anyformat-ai/anyformat-go/option"
 	"github.com/stainless-sdks/anyformat-cli/internal/apiquery"
-	"github.com/stainless-sdks/anyformat-go"
-	"github.com/stainless-sdks/anyformat-go/option"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
