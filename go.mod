@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/anyformat-cli
+module github.com/anyformat-ai/anyformat-cli
 
 go 1.25
 

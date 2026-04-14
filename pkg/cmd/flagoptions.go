@@ -14,11 +14,11 @@ import (
 	"strings"
 	"unicode/utf8"
 
+	"github.com/anyformat-ai/anyformat-cli/internal/apiform"
+	"github.com/anyformat-ai/anyformat-cli/internal/apiquery"
+	"github.com/anyformat-ai/anyformat-cli/internal/debugmiddleware"
+	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
 	"github.com/anyformat-ai/anyformat-go/option"
-	"github.com/stainless-sdks/anyformat-cli/internal/apiform"
-	"github.com/stainless-sdks/anyformat-cli/internal/apiquery"
-	"github.com/stainless-sdks/anyformat-cli/internal/debugmiddleware"
-	"github.com/stainless-sdks/anyformat-cli/internal/requestflag"
 
 	"github.com/goccy/go-yaml"
 	"github.com/urfave/cli/v3"
