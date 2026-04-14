@@ -15,7 +15,7 @@ on:
       - 'stl-preview-base/**'
 
 env:
-  GOPRIVATE: github.com/stainless-sdks/anyformat-go
+  GOPRIVATE: github.com/anyformat-ai/anyformat-go,github.com/stainless-sdks/anyformat-go
 
 jobs:
   lint:

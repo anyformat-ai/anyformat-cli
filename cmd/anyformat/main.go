@@ -10,8 +10,8 @@ import (
 	"os"
 	"slices"
 
+	"github.com/anyformat-ai/anyformat-go"
 	"github.com/stainless-sdks/anyformat-cli/pkg/cmd"
-	"github.com/stainless-sdks/anyformat-go"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
