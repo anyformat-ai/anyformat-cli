@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/anyformat-ai/anyformat-cli/internal/apiquery"
+	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
 	"github.com/anyformat-ai/anyformat-go"
 	"github.com/anyformat-ai/anyformat-go/option"
-	"github.com/stainless-sdks/anyformat-cli/internal/apiquery"
-	"github.com/stainless-sdks/anyformat-cli/internal/requestflag"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )

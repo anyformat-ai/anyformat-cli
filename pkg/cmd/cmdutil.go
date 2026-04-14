@@ -16,8 +16,8 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/anyformat-ai/anyformat-cli/internal/jsonview"
 	"github.com/anyformat-ai/anyformat-go/option"
-	"github.com/stainless-sdks/anyformat-cli/internal/jsonview"
 
 	"github.com/charmbracelet/x/term"
 	"github.com/itchyny/json2yaml"
