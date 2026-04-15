@@ -117,8 +117,9 @@ func handleFilesCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "files create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "files create", obj, format, explicitFormat, transform)
 }
 
 func handleFilesList(ctx context.Context, cmd *cli.Command) error {
@@ -151,8 +152,9 @@ func handleFilesList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "files list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "files list", obj, format, explicitFormat, transform)
 }
 
 func handleFilesDelete(ctx context.Context, cmd *cli.Command) error {
@@ -211,6 +213,7 @@ func handleFilesGetExtractionResults(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "files get-extraction-results", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "files get-extraction-results", obj, format, explicitFormat, transform)
 }

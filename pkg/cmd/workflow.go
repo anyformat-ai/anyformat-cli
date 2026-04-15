@@ -227,8 +227,9 @@ func handleWorkflowsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "workflows create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "workflows create", obj, format, explicitFormat, transform)
 }
 
 func handleWorkflowsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -262,8 +263,9 @@ func handleWorkflowsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "workflows retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "workflows retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWorkflowsList(ctx context.Context, cmd *cli.Command) error {
@@ -296,8 +298,9 @@ func handleWorkflowsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "workflows list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "workflows list", obj, format, explicitFormat, transform)
 }
 
 func handleWorkflowsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -363,8 +366,9 @@ func handleWorkflowsListRuns(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "workflows list-runs", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "workflows list-runs", obj, format, explicitFormat, transform)
 }
 
 func handleWorkflowsResults(ctx context.Context, cmd *cli.Command) error {
@@ -405,8 +409,9 @@ func handleWorkflowsResults(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "workflows results", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "workflows results", obj, format, explicitFormat, transform)
 }
 
 func handleWorkflowsRun(ctx context.Context, cmd *cli.Command) error {
@@ -447,8 +452,9 @@ func handleWorkflowsRun(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "workflows run", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "workflows run", obj, format, explicitFormat, transform)
 }
 
 func handleWorkflowsUpload(ctx context.Context, cmd *cli.Command) error {
@@ -489,6 +495,7 @@ func handleWorkflowsUpload(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "workflows upload", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "workflows upload", obj, format, explicitFormat, transform)
 }
