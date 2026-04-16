@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/anyformat-ai/anyformat-cli/internal/apiquery"
 	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
@@ -229,7 +228,12 @@ func handleWorkflowsCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "workflows create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "workflows create",
+		Transform:      transform,
+	})
 }
 
 func handleWorkflowsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -265,7 +269,12 @@ func handleWorkflowsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "workflows retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "workflows retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleWorkflowsList(ctx context.Context, cmd *cli.Command) error {
@@ -300,7 +309,12 @@ func handleWorkflowsList(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "workflows list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "workflows list",
+		Transform:      transform,
+	})
 }
 
 func handleWorkflowsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -368,7 +382,12 @@ func handleWorkflowsListRuns(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "workflows list-runs", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "workflows list-runs",
+		Transform:      transform,
+	})
 }
 
 func handleWorkflowsResults(ctx context.Context, cmd *cli.Command) error {
@@ -411,7 +430,12 @@ func handleWorkflowsResults(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "workflows results", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "workflows results",
+		Transform:      transform,
+	})
 }
 
 func handleWorkflowsRun(ctx context.Context, cmd *cli.Command) error {
@@ -454,7 +478,12 @@ func handleWorkflowsRun(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "workflows run", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "workflows run",
+		Transform:      transform,
+	})
 }
 
 func handleWorkflowsUpload(ctx context.Context, cmd *cli.Command) error {
@@ -497,5 +526,10 @@ func handleWorkflowsUpload(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "workflows upload", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "workflows upload",
+		Transform:      transform,
+	})
 }

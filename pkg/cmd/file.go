@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/anyformat-ai/anyformat-cli/internal/apiquery"
 	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
@@ -119,7 +118,12 @@ func handleFilesCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "files create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "files create",
+		Transform:      transform,
+	})
 }
 
 func handleFilesList(ctx context.Context, cmd *cli.Command) error {
@@ -154,7 +158,12 @@ func handleFilesList(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "files list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "files list",
+		Transform:      transform,
+	})
 }
 
 func handleFilesDelete(ctx context.Context, cmd *cli.Command) error {
@@ -215,5 +224,10 @@ func handleFilesGetExtractionResults(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "files get-extraction-results", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "files get-extraction-results",
+		Transform:      transform,
+	})
 }
