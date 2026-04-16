@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/anyformat-ai/anyformat-cli/internal/apiquery"
 	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
@@ -90,7 +89,12 @@ func handleWebhooksCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "webhooks create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "webhooks create",
+		Transform:      transform,
+	})
 }
 
 func handleWebhooksList(ctx context.Context, cmd *cli.Command) error {
@@ -123,7 +127,12 @@ func handleWebhooksList(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "webhooks list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "webhooks list",
+		Transform:      transform,
+	})
 }
 
 func handleWebhooksDelete(ctx context.Context, cmd *cli.Command) error {
