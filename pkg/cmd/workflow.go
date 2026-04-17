@@ -231,6 +231,7 @@ func handleWorkflowsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "workflows create",
 		Transform:      transform,
 	})
@@ -272,6 +273,7 @@ func handleWorkflowsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "workflows retrieve",
 		Transform:      transform,
 	})
@@ -312,6 +314,7 @@ func handleWorkflowsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "workflows list",
 		Transform:      transform,
 	})
@@ -385,6 +388,7 @@ func handleWorkflowsListRuns(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "workflows list-runs",
 		Transform:      transform,
 	})
@@ -433,6 +437,7 @@ func handleWorkflowsResults(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "workflows results",
 		Transform:      transform,
 	})
@@ -481,6 +486,7 @@ func handleWorkflowsRun(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "workflows run",
 		Transform:      transform,
 	})
@@ -529,6 +535,7 @@ func handleWorkflowsUpload(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "workflows upload",
 		Transform:      transform,
 	})
