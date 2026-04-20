@@ -107,10 +107,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&filesCreate,
-					&filesList,
 					&filesDelete,
-					&filesGetExtractionResults,
 				},
 			},
 			{
@@ -123,7 +120,6 @@ func init() {
 					&workflowsList,
 					&workflowsDelete,
 					&workflowsListRuns,
-					&workflowsResults,
 					&workflowsRun,
 					&workflowsUpload,
 				},
