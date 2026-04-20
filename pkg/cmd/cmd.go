@@ -12,8 +12,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/stainless-sdks/anyformat-cli/internal/autocomplete"
-	"github.com/stainless-sdks/anyformat-cli/internal/requestflag"
+	"github.com/anyformat-ai/anyformat-cli/internal/autocomplete"
+	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
 	docs "github.com/urfave/cli-docs/v3"
 	"github.com/urfave/cli/v3"
 )
@@ -72,6 +72,11 @@ func init() {
 			&cli.StringFlag{
 				Name:  "transform-error",
 				Usage: "The GJSON transformation for errors.",
+			},
+			&cli.BoolFlag{
+				Name:    "raw-output",
+				Aliases: []string{"r"},
+				Usage:   "If the result is a string, print it without JSON quotes. This can be useful for making output transforms talk to non-JSON-based systems.",
 			},
 			&requestflag.Flag[string]{
 				Name:    "api-key",

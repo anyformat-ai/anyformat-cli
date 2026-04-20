@@ -5,12 +5,11 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
+	"github.com/anyformat-ai/anyformat-cli/internal/apiquery"
+	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
 	"github.com/anyformat-ai/anyformat-go"
 	"github.com/anyformat-ai/anyformat-go/option"
-	"github.com/stainless-sdks/anyformat-cli/internal/apiquery"
-	"github.com/stainless-sdks/anyformat-cli/internal/requestflag"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
@@ -117,8 +116,15 @@ func handleFilesCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "files create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "files create",
+		Transform:      transform,
+	})
 }
 
 func handleFilesList(ctx context.Context, cmd *cli.Command) error {
@@ -151,8 +157,15 @@ func handleFilesList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "files list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "files list",
+		Transform:      transform,
+	})
 }
 
 func handleFilesDelete(ctx context.Context, cmd *cli.Command) error {
@@ -211,6 +224,13 @@ func handleFilesGetExtractionResults(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "files get-extraction-results", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "files get-extraction-results",
+		Transform:      transform,
+	})
 }

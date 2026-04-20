@@ -5,7 +5,7 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/anyformat-cli/internal/mocktest"
+	"github.com/anyformat-ai/anyformat-cli/internal/mocktest"
 )
 
 func TestFilesCreate(t *testing.T) {

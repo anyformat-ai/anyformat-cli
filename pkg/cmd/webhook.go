@@ -5,12 +5,11 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
+	"github.com/anyformat-ai/anyformat-cli/internal/apiquery"
+	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
 	"github.com/anyformat-ai/anyformat-go"
 	"github.com/anyformat-ai/anyformat-go/option"
-	"github.com/stainless-sdks/anyformat-cli/internal/apiquery"
-	"github.com/stainless-sdks/anyformat-cli/internal/requestflag"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
@@ -88,8 +87,15 @@ func handleWebhooksCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "webhooks create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "webhooks create",
+		Transform:      transform,
+	})
 }
 
 func handleWebhooksList(ctx context.Context, cmd *cli.Command) error {
@@ -120,8 +126,15 @@ func handleWebhooksList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "webhooks list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "webhooks list",
+		Transform:      transform,
+	})
 }
 
 func handleWebhooksDelete(ctx context.Context, cmd *cli.Command) error {

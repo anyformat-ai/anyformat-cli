@@ -5,11 +5,10 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
+	"github.com/anyformat-ai/anyformat-cli/internal/apiquery"
 	"github.com/anyformat-ai/anyformat-go"
 	"github.com/anyformat-ai/anyformat-go/option"
-	"github.com/stainless-sdks/anyformat-cli/internal/apiquery"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
@@ -51,6 +50,13 @@ func handleHealthCheck(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "health check", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "health check",
+		Transform:      transform,
+	})
 }
