@@ -59,6 +59,59 @@ func TestWorkflowsDelete(t *testing.T) {
 	})
 }
 
+func TestWorkflowsCreateFile(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"workflows", "create-file",
+			"--workflow-id", "workflow_id",
+			"--file", "string",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"files:\n" +
+			"  - string\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"workflows", "create-file",
+			"--workflow-id", "workflow_id",
+		)
+	})
+}
+
+func TestWorkflowsGetFileResults(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"workflows", "get-file-results",
+			"--workflow-id", "workflow_id",
+			"--collection-id", "collection_id",
+		)
+	})
+}
+
+func TestWorkflowsListFiles(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"workflows", "list-files",
+			"--workflow-id", "workflow_id",
+			"--page", "1",
+			"--page-size", "1",
+		)
+	})
+}
+
 func TestWorkflowsListRuns(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -73,20 +126,6 @@ func TestWorkflowsListRuns(t *testing.T) {
 	})
 }
 
-func TestWorkflowsResults(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"workflows", "results",
-			"--workflow-id", "workflow_id",
-			"--as-lists", "as_lists",
-			"--output-format", "jsonl",
-		)
-	})
-}
-
 func TestWorkflowsRun(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -95,10 +134,7 @@ func TestWorkflowsRun(t *testing.T) {
 			"--api-key", "string",
 			"workflows", "run",
 			"--workflow-id", "workflow_id",
-			"--content-type", "content_type",
 			"--file", "file",
-			"--file-base64", "file_base64",
-			"--filename", "filename",
 			"--text", "text",
 		)
 	})
@@ -106,10 +142,7 @@ func TestWorkflowsRun(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"content_type: content_type\n" +
 			"file: file\n" +
-			"file_base64: file_base64\n" +
-			"filename: filename\n" +
 			"text: text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
@@ -128,10 +161,7 @@ func TestWorkflowsUpload(t *testing.T) {
 			"--api-key", "string",
 			"workflows", "upload",
 			"--workflow-id", "workflow_id",
-			"--content-type", "content_type",
 			"--file", "file",
-			"--file-base64", "file_base64",
-			"--filename", "filename",
 			"--text", "text",
 		)
 	})
@@ -139,10 +169,7 @@ func TestWorkflowsUpload(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"content_type: content_type\n" +
 			"file: file\n" +
-			"file_base64: file_base64\n" +
-			"filename: filename\n" +
 			"text: text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

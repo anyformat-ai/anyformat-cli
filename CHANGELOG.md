@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.0 (2026-04-21)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/anyformat-ai/anyformat-cli/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** api update ([8c85591](https://github.com/anyformat-ai/anyformat-cli/commit/8c8559130ed2c56cb454bc961fe0a3da5f27b28c))
+* **api:** manual updates ([f209688](https://github.com/anyformat-ai/anyformat-cli/commit/f2096881ac5a14758cdedb112b90ca2157ff7fa5))
+
+
+### Bug Fixes
+
+* bump anyformat-go SDK to v0.2.0 ([378587d](https://github.com/anyformat-ai/anyformat-cli/commit/378587d755c1a2b74626266232c3d6679063e379))
+
 ## 0.1.0 (2026-04-18)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/anyformat-ai/anyformat-cli/compare/v0.0.1...v0.1.0)

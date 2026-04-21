@@ -83,6 +83,67 @@ var workflowsDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
+var workflowsCreateFile = cli.Command{
+	Name:    "create-file",
+	Usage:   "Upload files to a workflow, creating a file collection.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "workflow-id",
+			Required: true,
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "file",
+			Required: true,
+			BodyPath: "files",
+		},
+	},
+	Action:          handleWorkflowsCreateFile,
+	HideHelpCommand: true,
+}
+
+var workflowsGetFileResults = cli.Command{
+	Name:    "get-file-results",
+	Usage:   "Get processing results for a file collection.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "workflow-id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "collection-id",
+			Required: true,
+		},
+	},
+	Action:          handleWorkflowsGetFileResults,
+	HideHelpCommand: true,
+}
+
+var workflowsListFiles = cli.Command{
+	Name:    "list-files",
+	Usage:   "List file collections for a workflow.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "workflow-id",
+			Required: true,
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page",
+			Default:   1,
+			QueryPath: "page",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Default:   20,
+			QueryPath: "page_size",
+		},
+	},
+	Action:          handleWorkflowsListFiles,
+	HideHelpCommand: true,
+}
+
 var workflowsListRuns = cli.Command{
 	Name:    "list-runs",
 	Usage:   "List extraction runs for a workflow, identified by collection UUID.",
@@ -107,29 +168,6 @@ var workflowsListRuns = cli.Command{
 	HideHelpCommand: true,
 }
 
-var workflowsResults = cli.Command{
-	Name:    "results",
-	Usage:   "Get workflow results.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
-		},
-		&requestflag.Flag[any]{
-			Name:      "as-lists",
-			QueryPath: "as_lists",
-		},
-		&requestflag.Flag[string]{
-			Name:      "output-format",
-			Default:   "csv",
-			QueryPath: "output_format",
-		},
-	},
-	Action:          handleWorkflowsResults,
-	HideHelpCommand: true,
-}
-
 var workflowsRun = cli.Command{
 	Name:    "run",
 	Usage:   "Execute workflow — returns collection UUID.",
@@ -140,20 +178,8 @@ var workflowsRun = cli.Command{
 			Required: true,
 		},
 		&requestflag.Flag[any]{
-			Name:     "content-type",
-			BodyPath: "content_type",
-		},
-		&requestflag.Flag[any]{
 			Name:     "file",
 			BodyPath: "file",
-		},
-		&requestflag.Flag[any]{
-			Name:     "file-base64",
-			BodyPath: "file_base64",
-		},
-		&requestflag.Flag[any]{
-			Name:     "filename",
-			BodyPath: "filename",
 		},
 		&requestflag.Flag[any]{
 			Name:     "text",
@@ -174,20 +200,8 @@ var workflowsUpload = cli.Command{
 			Required: true,
 		},
 		&requestflag.Flag[any]{
-			Name:     "content-type",
-			BodyPath: "content_type",
-		},
-		&requestflag.Flag[any]{
 			Name:     "file",
 			BodyPath: "file",
-		},
-		&requestflag.Flag[any]{
-			Name:     "file-base64",
-			BodyPath: "file_base64",
-		},
-		&requestflag.Flag[any]{
-			Name:     "filename",
-			BodyPath: "filename",
 		},
 		&requestflag.Flag[any]{
 			Name:     "text",
@@ -345,6 +359,155 @@ func handleWorkflowsDelete(ctx context.Context, cmd *cli.Command) error {
 	return client.Workflows.Delete(ctx, cmd.Value("workflow-id").(string), options...)
 }
 
+func handleWorkflowsCreateFile(ctx context.Context, cmd *cli.Command) error {
+	client := anyformat.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("workflow-id") && len(unusedArgs) > 0 {
+		cmd.Set("workflow-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := anyformat.WorkflowNewFileParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		MultipartFormEncoded,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Workflows.NewFile(
+		ctx,
+		cmd.Value("workflow-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "workflows create-file",
+		Transform:      transform,
+	})
+}
+
+func handleWorkflowsGetFileResults(ctx context.Context, cmd *cli.Command) error {
+	client := anyformat.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("collection-id") && len(unusedArgs) > 0 {
+		cmd.Set("collection-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := anyformat.WorkflowGetFileResultsParams{
+		WorkflowID: cmd.Value("workflow-id").(string),
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Workflows.GetFileResults(
+		ctx,
+		cmd.Value("collection-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "workflows get-file-results",
+		Transform:      transform,
+	})
+}
+
+func handleWorkflowsListFiles(ctx context.Context, cmd *cli.Command) error {
+	client := anyformat.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("workflow-id") && len(unusedArgs) > 0 {
+		cmd.Set("workflow-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := anyformat.WorkflowListFilesParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Workflows.ListFiles(
+		ctx,
+		cmd.Value("workflow-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "workflows list-files",
+		Transform:      transform,
+	})
+}
+
 func handleWorkflowsListRuns(ctx context.Context, cmd *cli.Command) error {
 	client := anyformat.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -390,55 +553,6 @@ func handleWorkflowsListRuns(ctx context.Context, cmd *cli.Command) error {
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "workflows list-runs",
-		Transform:      transform,
-	})
-}
-
-func handleWorkflowsResults(ctx context.Context, cmd *cli.Command) error {
-	client := anyformat.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("workflow-id") && len(unusedArgs) > 0 {
-		cmd.Set("workflow-id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := anyformat.WorkflowResultsParams{}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Workflows.Results(
-		ctx,
-		cmd.Value("workflow-id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "workflows results",
 		Transform:      transform,
 	})
 }
