@@ -1,5 +1,5 @@
-github.com/anyformat-ai/anyformat-go v0.1.0 h1:o8d2lzq1u827xYJzmds0lETX+1YCT1qSdNYI8t78of8=
-github.com/anyformat-ai/anyformat-go v0.1.0/go.mod h1:bWMep/JzylVOGAvCM02ug/XkE2nDUX8AMuq5RWka6kw=
+github.com/anyformat-ai/anyformat-go v0.2.0 h1:HR7W+xucMLGIim8LNTEAkMN3QKN5tzC6FEcKnWt9UU4=
+github.com/anyformat-ai/anyformat-go v0.2.0/go.mod h1:bWMep/JzylVOGAvCM02ug/XkE2nDUX8AMuq5RWka6kw=
 github.com/aymanbagabas/go-osc52/v2 v2.0.1 h1:HwpRHbFMcZLEVr42D4p7XBqjyuxQH5SMiErDT4WkJ2k=
 github.com/aymanbagabas/go-osc52/v2 v2.0.1/go.mod h1:uYgXzlJ7ZpABp8OJ+exZzJJhRNQ2ASbcXHWsFqH8hp8=
 github.com/aymanbagabas/go-udiff v0.2.0 h1:TK0fH4MteXUDspT88n8CKzvK0X9O2xu9yQjWpi6yML8=
