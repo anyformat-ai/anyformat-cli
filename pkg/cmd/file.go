@@ -14,7 +14,7 @@ import (
 
 var filesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a file collection and all its files.",
+	Usage:   "Delete a file collection and all its files permanently.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

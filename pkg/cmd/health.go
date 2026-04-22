@@ -15,7 +15,7 @@ import (
 
 var healthCheck = cli.Command{
 	Name:            "check",
-	Usage:           "Health check endpoint.",
+	Usage:           "Returns 200 OK if the service is running. No authentication required.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleHealthCheck,
