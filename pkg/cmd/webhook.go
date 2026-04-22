@@ -16,17 +16,18 @@ import (
 
 var webhooksCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new webhook subscription.",
+	Usage:   "Create a new webhook subscription for your organization.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "url",
+			Usage:    "The HTTPS URL to receive webhook events. Must be publicly accessible.",
 			Required: true,
 			BodyPath: "url",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "event",
-			Default:  []string{"extraction.completed", "extraction.failed"},
+			Usage:    "List of event types to subscribe to. Available events: `extraction.completed`, `extraction.failed`.",
 			BodyPath: "events",
 		},
 	},

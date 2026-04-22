@@ -15,17 +15,19 @@ func TestWebhooksCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"webhooks", "create",
-			"--url", "https://example.com",
-			"--event", "string",
+			"--url", "https://example.com/webhooks/anyformat",
+			"--event", "extraction.completed",
+			"--event", "extraction.failed",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"url: https://example.com\n" +
+			"url: https://example.com/webhooks/anyformat\n" +
 			"events:\n" +
-			"  - string\n")
+			"  - extraction.completed\n" +
+			"  - extraction.failed\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

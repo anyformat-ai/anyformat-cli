@@ -16,7 +16,7 @@ import (
 
 var workflowsCreate = cli.Command{
 	Name:            "create",
-	Usage:           "Create a new workflow.",
+	Usage:           "Create a new extraction workflow.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleWorkflowsCreate,
@@ -25,7 +25,7 @@ var workflowsCreate = cli.Command{
 
 var workflowsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get workflow by ID.",
+	Usage:   "Retrieve a single workflow by its ID, including its configured extraction\nfields.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -39,7 +39,7 @@ var workflowsRetrieve = cli.Command{
 
 var workflowsList = cli.Command{
 	Name:    "list",
-	Usage:   "List workflows with pagination.",
+	Usage:   "List all workflows in your organization with pagination.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[any]{
@@ -71,7 +71,7 @@ var workflowsList = cli.Command{
 
 var workflowsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete workflow by ID.",
+	Usage:   "Delete a workflow and all associated file collections and extraction results.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -85,7 +85,7 @@ var workflowsDelete = cli.Command{
 
 var workflowsCreateFile = cli.Command{
 	Name:    "create-file",
-	Usage:   "Upload files to a workflow, creating a file collection.",
+	Usage:   "Upload one or more files to a workflow, creating a new file collection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -104,7 +104,7 @@ var workflowsCreateFile = cli.Command{
 
 var workflowsGetFileResults = cli.Command{
 	Name:    "get-file-results",
-	Usage:   "Get processing results for a file collection.",
+	Usage:   "Retrieve the extraction results for a file collection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -146,7 +146,7 @@ var workflowsListFiles = cli.Command{
 
 var workflowsListRuns = cli.Command{
 	Name:    "list-runs",
-	Usage:   "List extraction runs for a workflow, identified by collection UUID.",
+	Usage:   "List all extraction runs for a workflow with pagination.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -170,7 +170,7 @@ var workflowsListRuns = cli.Command{
 
 var workflowsRun = cli.Command{
 	Name:    "run",
-	Usage:   "Execute workflow — returns collection UUID.",
+	Usage:   "Upload a file and immediately run the extraction workflow on it.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -192,7 +192,7 @@ var workflowsRun = cli.Command{
 
 var workflowsUpload = cli.Command{
 	Name:    "upload",
-	Usage:   "Upload file without executing workflow.",
+	Usage:   "Upload a file to a workflow without running extraction.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
