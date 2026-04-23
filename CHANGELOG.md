@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 (2026-04-23)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/anyformat-ai/anyformat-cli/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([87f3e16](https://github.com/anyformat-ai/anyformat-cli/commit/87f3e16aade461ca2b7fbb7e96f676fe2ef7d2f7))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([57bca25](https://github.com/anyformat-ai/anyformat-cli/commit/57bca25a350f666b4d0ea1389a0532e7f2d68ae3))
+
 ## 0.2.0 (2026-04-21)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/anyformat-ai/anyformat-cli/compare/v0.1.0...v0.2.0)
