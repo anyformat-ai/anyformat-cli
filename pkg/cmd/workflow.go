@@ -15,10 +15,29 @@ import (
 )
 
 var workflowsCreate = cli.Command{
-	Name:            "create",
-	Usage:           "Create a new extraction workflow.",
-	Suggest:         true,
-	Flags:           []cli.Flag{},
+	Name:    "create",
+	Usage:   "Create a new extraction workflow.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "field",
+			Usage:    "Field definitions",
+			Required: true,
+			BodyPath: "fields",
+		},
+		&requestflag.Flag[string]{
+			Name:     "name",
+			Usage:    "Workflow name",
+			Required: true,
+			BodyPath: "name",
+		},
+		&requestflag.Flag[any]{
+			Name:     "description",
+			Usage:    "Workflow description",
+			Default:  "",
+			BodyPath: "description",
+		},
+	},
 	Action:          handleWorkflowsCreate,
 	HideHelpCommand: true,
 }
@@ -220,11 +239,13 @@ func handleWorkflowsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
+	params := anyformat.WorkflowNewParams{}
+
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
 		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
+		ApplicationJSON,
 		false,
 	)
 	if err != nil {
@@ -233,7 +254,7 @@ func handleWorkflowsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Workflows.New(ctx, options...)
+	_, err = client.Workflows.New(ctx, params, options...)
 	if err != nil {
 		return err
 	}
