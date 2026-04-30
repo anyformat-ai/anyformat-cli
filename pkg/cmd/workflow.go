@@ -48,8 +48,9 @@ var workflowsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
+			Name:      "workflow-id",
+			Required:  true,
+			PathParam: "workflow_id",
 		},
 	},
 	Action:          handleWorkflowsRetrieve,
@@ -94,8 +95,9 @@ var workflowsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
+			Name:      "workflow-id",
+			Required:  true,
+			PathParam: "workflow_id",
 		},
 	},
 	Action:          handleWorkflowsDelete,
@@ -108,8 +110,9 @@ var workflowsCreateFile = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
+			Name:      "workflow-id",
+			Required:  true,
+			PathParam: "workflow_id",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "file",
@@ -127,12 +130,14 @@ var workflowsGetFileResults = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
+			Name:      "workflow-id",
+			Required:  true,
+			PathParam: "workflow_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "collection-id",
-			Required: true,
+			Name:      "collection-id",
+			Required:  true,
+			PathParam: "collection_id",
 		},
 	},
 	Action:          handleWorkflowsGetFileResults,
@@ -145,8 +150,9 @@ var workflowsListFiles = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
+			Name:      "workflow-id",
+			Required:  true,
+			PathParam: "workflow_id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page",
@@ -169,8 +175,9 @@ var workflowsListRuns = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
+			Name:      "workflow-id",
+			Required:  true,
+			PathParam: "workflow_id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page",
@@ -193,8 +200,9 @@ var workflowsRun = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
+			Name:      "workflow-id",
+			Required:  true,
+			PathParam: "workflow_id",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "file",
@@ -215,8 +223,9 @@ var workflowsUpload = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "workflow-id",
-			Required: true,
+			Name:      "workflow-id",
+			Required:  true,
+			PathParam: "workflow_id",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "file",
@@ -239,8 +248,6 @@ func handleWorkflowsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := anyformat.WorkflowNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -251,6 +258,8 @@ func handleWorkflowsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := anyformat.WorkflowNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -322,8 +331,6 @@ func handleWorkflowsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := anyformat.WorkflowListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -334,6 +341,8 @@ func handleWorkflowsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := anyformat.WorkflowListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -391,8 +400,6 @@ func handleWorkflowsCreateFile(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := anyformat.WorkflowNewFileParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -403,6 +410,8 @@ func handleWorkflowsCreateFile(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := anyformat.WorkflowNewFileParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -440,10 +449,6 @@ func handleWorkflowsGetFileResults(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := anyformat.WorkflowGetFileResultsParams{
-		WorkflowID: cmd.Value("workflow-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -453,6 +458,10 @@ func handleWorkflowsGetFileResults(ctx context.Context, cmd *cli.Command) error 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := anyformat.WorkflowGetFileResultsParams{
+		WorkflowID: cmd.Value("workflow-id").(string),
 	}
 
 	var res []byte
@@ -491,8 +500,6 @@ func handleWorkflowsListFiles(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := anyformat.WorkflowListFilesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -503,6 +510,8 @@ func handleWorkflowsListFiles(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := anyformat.WorkflowListFilesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -540,8 +549,6 @@ func handleWorkflowsListRuns(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := anyformat.WorkflowListRunsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -552,6 +559,8 @@ func handleWorkflowsListRuns(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := anyformat.WorkflowListRunsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -589,8 +598,6 @@ func handleWorkflowsRun(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := anyformat.WorkflowRunParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -601,6 +608,8 @@ func handleWorkflowsRun(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := anyformat.WorkflowRunParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -638,8 +647,6 @@ func handleWorkflowsUpload(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := anyformat.WorkflowUploadParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -650,6 +657,8 @@ func handleWorkflowsUpload(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := anyformat.WorkflowUploadParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
