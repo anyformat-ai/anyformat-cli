@@ -31,10 +31,10 @@ var workflowsCreate = cli.Command{
 			Required: true,
 			BodyPath: "name",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "description",
 			Usage:    "Workflow description",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "description",
 		},
 	},
@@ -61,7 +61,7 @@ var workflowsList = cli.Command{
 	Usage:   "List all workflows in your organization with pagination.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:      "order",
 			QueryPath: "order",
 		},
@@ -75,11 +75,11 @@ var workflowsList = cli.Command{
 			Default:   20,
 			QueryPath: "page_size",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:      "sort-by",
 			QueryPath: "sort_by",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:      "status",
 			QueryPath: "status",
 		},
@@ -196,11 +196,11 @@ var workflowsRun = cli.Command{
 			Name:     "workflow-id",
 			Required: true,
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "file",
 			BodyPath: "file",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "text",
 			BodyPath: "text",
 		},
@@ -218,11 +218,11 @@ var workflowsUpload = cli.Command{
 			Name:     "workflow-id",
 			Required: true,
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "file",
 			BodyPath: "file",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "text",
 			BodyPath: "text",
 		},
