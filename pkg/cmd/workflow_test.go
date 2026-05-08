@@ -15,7 +15,7 @@ func TestWorkflowsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"workflows", "create",
-			"--field", "{data_type: bar, name: bar}",
+			"--field", "{data_type: string, name: invoice_number}",
 			"--name", "Invoice Processing",
 			"--description", "Extracts invoice number, vendor, total, and line items.",
 		)
@@ -25,8 +25,8 @@ func TestWorkflowsCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"fields:\n" +
-			"  - data_type: bar\n" +
-			"    name: bar\n" +
+			"  - data_type: string\n" +
+			"    name: invoice_number\n" +
 			"name: Invoice Processing\n" +
 			"description: Extracts invoice number, vendor, total, and line items.\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
