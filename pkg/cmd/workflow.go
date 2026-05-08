@@ -19,9 +19,9 @@ var workflowsCreate = cli.Command{
 	Usage:   "Create a new extraction workflow.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[[]map[string]any]{
+		&requestflag.Flag[[]any]{
 			Name:     "field",
-			Usage:    "Field definitions",
+			Usage:    "Field definitions. Each entry's shape is determined by its `data_type`.",
 			Required: true,
 			BodyPath: "fields",
 		},
