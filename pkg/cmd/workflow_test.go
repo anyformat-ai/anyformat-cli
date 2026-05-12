@@ -15,7 +15,7 @@ func TestWorkflowsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"workflows", "create",
-			"--field", "{data_type: string, name: invoice_number}",
+			"--field", "{data_type: string, description: x, name: invoice_number}",
 			"--name", "Invoice Processing",
 			"--description", "Extracts invoice number, vendor, total, and line items.",
 		)
@@ -26,6 +26,7 @@ func TestWorkflowsCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"fields:\n" +
 			"  - data_type: string\n" +
+			"    description: x\n" +
 			"    name: invoice_number\n" +
 			"name: Invoice Processing\n" +
 			"description: Extracts invoice number, vendor, total, and line items.\n")
