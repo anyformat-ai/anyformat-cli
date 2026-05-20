@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/anyformat-ai/anyformat-cli/internal/mocktest"
+	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
 )
 
 func TestWorkflowsCreate(t *testing.T) {
@@ -15,21 +16,49 @@ func TestWorkflowsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"workflows", "create",
-			"--field", "{data_type: string, description: x, name: invoice_number}",
-			"--name", "Invoice Processing",
-			"--description", "Extracts invoice number, vendor, total, and line items.",
+			"--name", "Invoice or receipt",
+			"--node", "{id: x, type: parse, effort: low, engine: Fast, figure_enhancement_enabled: true, mode: standard, prompt_hint: prompt_hint, visual_grounding_enabled: true}",
+			"--description", "description",
+			"--edge", "{source: x, target: x, branch: branch}",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(workflowsCreate)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"workflows", "create",
+			"--name", "Invoice or receipt",
+			"--node", "{id: x, type: parse, effort: low, engine: Fast, figure_enhancement_enabled: true, mode: standard, prompt_hint: prompt_hint, visual_grounding_enabled: true}",
+			"--description", "description",
+			"--edge.source", "x",
+			"--edge.target", "x",
+			"--edge.branch", "branch",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"fields:\n" +
-			"  - data_type: string\n" +
-			"    description: x\n" +
-			"    name: invoice_number\n" +
-			"name: Invoice Processing\n" +
-			"description: Extracts invoice number, vendor, total, and line items.\n")
+			"name: Invoice or receipt\n" +
+			"nodes:\n" +
+			"  - id: x\n" +
+			"    type: parse\n" +
+			"    effort: low\n" +
+			"    engine: Fast\n" +
+			"    figure_enhancement_enabled: true\n" +
+			"    mode: standard\n" +
+			"    prompt_hint: prompt_hint\n" +
+			"    visual_grounding_enabled: true\n" +
+			"description: description\n" +
+			"edges:\n" +
+			"  - source: x\n" +
+			"    target: x\n" +
+			"    branch: branch\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

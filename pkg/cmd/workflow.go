@@ -14,33 +14,50 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var workflowsCreate = cli.Command{
+var workflowsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a new extraction workflow.",
+	Usage:   "Create a workflow from a strongly-typed graph (atomic).",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[[]map[string]any]{
-			Name:     "field",
-			Usage:    "Field definitions. Each entry's shape is determined by its `data_type`.",
-			Required: true,
-			BodyPath: "fields",
-		},
 		&requestflag.Flag[string]{
 			Name:     "name",
-			Usage:    "Workflow name",
 			Required: true,
 			BodyPath: "name",
 		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "node",
+			Required: true,
+			BodyPath: "nodes",
+		},
 		&requestflag.Flag[*string]{
 			Name:     "description",
-			Usage:    "Workflow description",
 			Default:  requestflag.Ptr[string](""),
 			BodyPath: "description",
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "edge",
+			BodyPath: "edges",
 		},
 	},
 	Action:          handleWorkflowsCreate,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"edge": {
+		&requestflag.InnerFlag[string]{
+			Name:       "edge.source",
+			InnerField: "source",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "edge.target",
+			InnerField: "target",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "edge.branch",
+			Usage:      "Source-port label for branch routing. Required when leaving a classify or splitter node by category/rule.",
+			InnerField: "branch",
+		},
+	},
+})
 
 var workflowsRetrieve = cli.Command{
 	Name:    "retrieve",
