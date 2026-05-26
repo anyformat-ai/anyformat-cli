@@ -17,7 +17,7 @@ func TestWorkflowsCreate(t *testing.T) {
 			"--api-key", "string",
 			"workflows", "create",
 			"--name", "Invoice or receipt",
-			"--node", "{id: x, type: parse, effort: low, engine: Fast, figure_enhancement: true, mode: standard, prompt_hint: prompt_hint, visual_grounding_enabled: true}",
+			"--node", "{id: x, type: parse, figure_enhancement: true, mode: standard, prompt_hint: prompt_hint}",
 			"--description", "description",
 			"--edge", "{source: x, target: x, branch: branch}",
 		)
@@ -33,7 +33,7 @@ func TestWorkflowsCreate(t *testing.T) {
 			"--api-key", "string",
 			"workflows", "create",
 			"--name", "Invoice or receipt",
-			"--node", "{id: x, type: parse, effort: low, engine: Fast, figure_enhancement: true, mode: standard, prompt_hint: prompt_hint, visual_grounding_enabled: true}",
+			"--node", "{id: x, type: parse, figure_enhancement: true, mode: standard, prompt_hint: prompt_hint}",
 			"--description", "description",
 			"--edge.source", "x",
 			"--edge.target", "x",
@@ -48,12 +48,9 @@ func TestWorkflowsCreate(t *testing.T) {
 			"nodes:\n" +
 			"  - id: x\n" +
 			"    type: parse\n" +
-			"    effort: low\n" +
-			"    engine: Fast\n" +
 			"    figure_enhancement: true\n" +
 			"    mode: standard\n" +
 			"    prompt_hint: prompt_hint\n" +
-			"    visual_grounding_enabled: true\n" +
 			"description: description\n" +
 			"edges:\n" +
 			"  - source: x\n" +
