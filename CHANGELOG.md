@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.4.0 (2026-05-27)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/anyformat-ai/anyformat-cli/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** api update ([7256070](https://github.com/anyformat-ai/anyformat-cli/commit/725607094d45035b64658a35a4851b47e316768f))
+* **api:** api update ([7b66041](https://github.com/anyformat-ai/anyformat-cli/commit/7b6604199035d4e166c61fef44315dec8b9d8d7e))
+* **api:** api update ([7cd1a6c](https://github.com/anyformat-ai/anyformat-cli/commit/7cd1a6cd3deee3cdcd9106aca012243d7b48df19))
+* **api:** api update ([955c2fc](https://github.com/anyformat-ai/anyformat-cli/commit/955c2fc76ef61e9d4cbdaee6e8859aba7e292112))
+* **api:** api update ([203e162](https://github.com/anyformat-ai/anyformat-cli/commit/203e16224e22209c9e02adabec5885f271b23c71))
+* **api:** api update ([d1e5c88](https://github.com/anyformat-ai/anyformat-cli/commit/d1e5c881dae57c3666d2b23cf535e3abf04f6b11))
+* **api:** api update ([edfabe9](https://github.com/anyformat-ai/anyformat-cli/commit/edfabe9920e0d2481a526f9f29f2857db948c55a))
+* support passing path and query params over stdin ([3da9213](https://github.com/anyformat-ai/anyformat-cli/commit/3da9213dd8dc7f075613ddcef5acc1606767ddcb))
+
+
+### Bug Fixes
+
+* **cli:** correctly load zsh autocompletion ([dd4cecb](https://github.com/anyformat-ai/anyformat-cli/commit/dd4cecbe1653fe10fe0eab21fc3a54e21f21db3b))
+* flags for nullable body scalar fields are strictly typed ([adcf9da](https://github.com/anyformat-ai/anyformat-cli/commit/adcf9da24df04d6a74d4b19c1f56e277b3334e3c))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([04a9393](https://github.com/anyformat-ai/anyformat-cli/commit/04a93938601ad219ee8c657758eaad4a5e55116f))
+
 ## 0.3.0 (2026-04-23)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/anyformat-ai/anyformat-cli/compare/v0.2.0...v0.3.0)
