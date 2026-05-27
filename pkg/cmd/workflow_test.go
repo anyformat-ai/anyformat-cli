@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/anyformat-ai/anyformat-cli/internal/mocktest"
+	"github.com/anyformat-ai/anyformat-cli/internal/requestflag"
 )
 
 func TestWorkflowsCreate(t *testing.T) {
@@ -13,6 +14,50 @@ func TestWorkflowsCreate(t *testing.T) {
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
+			"--api-key", "string",
+			"workflows", "create",
+			"--name", "Invoice or receipt",
+			"--node", "{id: x, type: parse, figure_enhancement: true, mode: standard, prompt_hint: prompt_hint}",
+			"--description", "description",
+			"--edge", "{source: x, target: x, branch: branch}",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(workflowsCreate)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"workflows", "create",
+			"--name", "Invoice or receipt",
+			"--node", "{id: x, type: parse, figure_enhancement: true, mode: standard, prompt_hint: prompt_hint}",
+			"--description", "description",
+			"--edge.source", "x",
+			"--edge.target", "x",
+			"--edge.branch", "branch",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"name: Invoice or receipt\n" +
+			"nodes:\n" +
+			"  - id: x\n" +
+			"    type: parse\n" +
+			"    figure_enhancement: true\n" +
+			"    mode: standard\n" +
+			"    prompt_hint: prompt_hint\n" +
+			"description: description\n" +
+			"edges:\n" +
+			"  - source: x\n" +
+			"    target: x\n" +
+			"    branch: branch\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
 			"--api-key", "string",
 			"workflows", "create",
 		)

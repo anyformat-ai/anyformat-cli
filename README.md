@@ -49,7 +49,6 @@ anyformat [resource] <command> [flags...]
 
 ```sh
 anyformat workflows run \
-  --api-key 'My API Key' \
   --workflow-id 0686bb97-8c30-70f0-8000-97669e000eb8 \
   --text 'Invoice #12345
 Date: 2025-01-15

@@ -18,8 +18,9 @@ var filesDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "collection-id",
-			Required: true,
+			Name:      "collection-id",
+			Required:  true,
+			PathParam: "collection_id",
 		},
 	},
 	Action:          handleFilesDelete,
